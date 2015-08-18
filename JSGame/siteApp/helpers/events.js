@@ -1,26 +1,31 @@
-(function eventsInit (global) {
+(function eventsInit (GLOBAL, DOC) {
 
-    var siteApp = global.siteApp,
-        element = document.getElementById(siteApp.config.eventAnchor || 'wrapper');
+    var element = DOC.createElement('div');
 
-    function createEvent (eventName) {
-        return new CustomEvent(eventName);
+    function createEvent (eventName, detail) {
+        return new CustomEvent(eventName, { detail: detail });
     }
 
     function listen (eventName, handler) {
         element.addEventListener(eventName, handler, false);
     }
 
-    function trigger (eventName) {
-        var e = createEvent(eventName);
+    function trigger (eventName, detail) {
+        var e = createEvent(eventName, detail);
         element.dispatchEvent(e);
+    }
+
+    function mute (eventName, handler) {
+        element.removeEventListener(eventNamem, handler, false);
     }
 
     var publicApi = {
         listen: listen,
-        trigger: trigger
+        trigger: trigger,
+        mute: mute
     };
 
-    global.siteApp.events = publicApi;
+    GLOBAL.siteApp = GLOBAL.siteApp || {};
+    GLOBAL.siteApp.events = publicApi;
 
-})(window);
+})(window, document);
