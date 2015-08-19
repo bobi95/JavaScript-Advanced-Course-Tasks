@@ -30,15 +30,30 @@
             id: 'templater'
         },
         {
+            src: 'siteApp/libs/Templater.raw-v1.0.1.0.js',
+            callback: function() {
+                console.log('templater.raw loaded!');
+            },
+            id: 'templater.raw'
+        },
+        {
             src: 'siteApp/helpers/router.js',
             callback: function() {
                 console.log('router loaded!');
             },
             id: 'router'
+        },
+        {
+            src: 'siteApp/helpers/keyboardcapture.js',
+            callback: function() {
+                console.log('keyboardcapture loaded!');
+            },
+            id: 'keyboardcapture'
         }
     ];
 
     function init () {
+        console.log('everything loaded!');
 
         siteApp.Router = new Router();
         siteApp.Router.bindToHash();
