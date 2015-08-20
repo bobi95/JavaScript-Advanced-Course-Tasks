@@ -1,6 +1,6 @@
-(function (global) {
+(function (GLOBAL) {
 
-    var siteApp = global.siteApp || {};
+    var siteApp = GLOBAL.siteApp || {};
 
     siteApp.config = {
         eventAnchor: 'wrapper',
@@ -49,6 +49,13 @@
                 console.log('keyboardcapture loaded!');
             },
             id: 'keyboardcapture'
+        },
+        {
+            src: 'game_files/core/canvas.js',
+            callback: function() {
+                console.log('canvas loaded!');
+            },
+            id: 'canvas'
         }
     ];
 
@@ -58,19 +65,40 @@
         siteApp.Router = new Router();
         siteApp.Router.bindToHash();
 
-        var ctx = document.getElementById('canvas').getContext('2d');
-        for (var i=0;i<6;i++){
-          for (var j=0;j<6;j++){
-            ctx.strokeStyle = 'rgb(0,' + Math.floor(255-42.5*i) + ',' +
-                             Math.floor(255-42.5*j) + ')';
-            ctx.beginPath();
-            ctx.arc(12.5+j*25,12.5+i*25,10,0,Math.PI*2,true);
-            ctx.stroke();
-          }
-        }
+        // var ctx = document.getElementById('canvas').getContext('2d');
+        // for (var i=0;i<6;i++){
+        //   for (var j=0;j<6;j++){
+        //     ctx.strokeStyle = 'rgb(0,' + Math.floor(255-42.5*i) + ',' +
+        //                      Math.floor(255-42.5*j) + ')';
+        //     ctx.beginPath();
+        //     ctx.arc(12.5+j*25,12.5+i*25,10,0,Math.PI*2,true);
+        //     ctx.stroke();
+        //   }
+        // }
     }
 
-    global.siteApp = siteApp;
+    (function addCoreFuncs (GLOBAL){
+
+        if(!GLOBAL.String.prototype.endsWith) {
+            GLOBAL.String.prototype.endsWith = function stringEndsWith (str) {
+                return (this.length - str.length === this.indexOf(str));
+            };
+        }
+
+        if (!GLOBAL.String.prototype.startsWith) {
+            GLOBAL.String.prototype.startsWith = function stringStartsWith (str) {
+                return (this.indexOf(str) === 0);
+            };
+        }
+
+        if(!GLOBAL.String.prototype.contains) {
+            GLOBAL.String.prototype.contains = function stringContains (str) {
+                return (this.indexOf(str) !== -1);
+            };
+        }
+    })(GLOBAL);
+
+    GLOBAL.siteApp = siteApp;
 
     FileManager.scripts.loadMany(scripts, init);
 
