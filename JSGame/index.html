@@ -2,10 +2,97 @@
 <html>
 <head>
     <title>JS Game</title>
-    <link rel="stylesheet" type="text/css" href="/style/main.css">
+    <!--<link rel="stylesheet" type="text/css" href="/style/main.css">-->
+    <style>
+        .container {
+            font-size: 30px;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .hr-toggle {
+            display: inline-block;
+            position: relative;
+            background-color: gray;
+            border: 1px solid gray;
+            border-radius: 1em;
+            overflow: hidden;
+            width: 3em;
+            height: 1em;
+            transition: all 1s;
+            cursor: pointer;
+        }
+
+        .hr-toggle > .hr-toggle-option-on,
+        .hr-toggle > .hr-toggle-option-off,
+        .hr-toggle > .hr-toggle-separator {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            height: 2em;
+            width: 100%;
+            overflow: hidden;
+            font-size: 0.5em;
+            line-height: 2em;
+            color: white;
+            padding: 0 0.5em;
+            box-sizing: border-box;
+            text-align: left;
+            transition: all 0.5s;
+        }
+
+        .hr-toggle > .hr-toggle-option-on,
+        .hr-toggle > .hr-toggle-option-off {
+            width: 6em;
+            background-color: green;
+            z-index: 20;
+        }
+
+        .hr-toggle > .hr-toggle-option-off {
+            background-color: red;
+            text-align: right;
+            z-index: 10;
+        }
+
+        .hr-toggle > .hr-toggle-separator {
+            background-color: white;
+            width: 50%;
+            height: inherit;
+            margin-left: 50%;
+            border-radius: inherit;
+            z-index: 40;
+        }
+
+        .hr-toggle.hr-toggle-off > .hr-toggle-option-on {
+            width: 0;
+        }
+
+        .hr-toggle.hr-toggle-off > .hr-toggle-separator {
+            margin-left: 0;
+        }
+
+        .hr-toggle-input {
+            visibility: hidden;
+        }
+
+        .hr-toggle-label {
+            cursor: pointer;
+        }
+
+
+        /*    custom styles here */
+
+        .container {
+            font-size: 16px;
+        }
+
+        .hr-toggle-group-header .hr-toggle-label {
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="wrapper">
+    <!--<div id="wrapper">
         <div id="layout-header"></div>
         <div id="layout-main">
             <canvas id="canvas"></canvas>
@@ -14,6 +101,440 @@
     </div>
 
     <script type="text/javascript" src="siteApp/libs/FileManager.Scripts.js"></script>
-    <script type="text/javascript" src="siteApp/init.js"></script>
+    <script type="text/javascript" src="siteApp/init.js"></script>-->
+    <div class="container">
+        <div class="hr-toggle-group">
+            <div class="hr-toggle-group-header">
+                <div class="hr-toggle hr-toggle-on">
+                    <span class="hr-toggle-option-on">ON</span>
+                    <span class="hr-toggle-separator"></span>
+                    <span class="hr-toggle-option-off">OFF</span>
+                </div>
+                <span class="hr-toggle-label">Group 1</span>
+            </div>
+            <div class="hr-toggle-members">
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 1</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 2</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 3</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="hr-toggle-group">
+            <div class="hr-toggle-group-header">
+                <div class="hr-toggle hr-toggle-on">
+                    <span class="hr-toggle-option-on">ON</span>
+                    <span class="hr-toggle-separator"></span>
+                    <span class="hr-toggle-option-off">OFF</span>
+                </div>
+                <span class="hr-toggle-label">Group 2</span>
+            </div>
+            <div class="hr-toggle-members">
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 1</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 2</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 3</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="hr-toggle-group">
+            <div class="hr-toggle-group-header">
+                <div class="hr-toggle hr-toggle-on">
+                    <span class="hr-toggle-option-on">ON</span>
+                    <span class="hr-toggle-separator"></span>
+                    <span class="hr-toggle-option-off">OFF</span>
+                </div>
+                <span class="hr-toggle-label">Group 3</span>
+            </div>
+            <div class="hr-toggle-members">
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 1</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-off">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 2</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1">
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 3</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="hr-toggle-group">
+            <div class="hr-toggle-group-header">
+                <div class="hr-toggle hr-toggle-on">
+                    <span class="hr-toggle-option-on">ON</span>
+                    <span class="hr-toggle-separator"></span>
+                    <span class="hr-toggle-option-off">OFF</span>
+                </div>
+                <span class="hr-toggle-label">Group 4</span>
+            </div>
+            <div class="hr-toggle-members">
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 1</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 2</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 3</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="hr-toggle-group">
+            <div class="hr-toggle-group-header">
+                <div class="hr-toggle hr-toggle-on">
+                    <span class="hr-toggle-option-on">ON</span>
+                    <span class="hr-toggle-separator"></span>
+                    <span class="hr-toggle-option-off">OFF</span>
+                </div>
+                <span class="hr-toggle-label">Group 5</span>
+            </div>
+            <div class="hr-toggle-members">
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 1</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 2</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+                <div class="hr-toggle-member">
+                    <div class="hr-toggle hr-toggle-on">
+                        <span class="hr-toggle-option-on">ON</span>
+                        <span class="hr-toggle-separator"></span>
+                        <span class="hr-toggle-option-off">OFF</span>
+                    </div>
+                    <span class="hr-toggle-label">Member 3</span>
+                    <input class="hr-toggle-input" type="checkbox" value="member-1" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+(function init (GLOBAL, DOC, APP) {
+
+    function ToggleCollection () {
+
+        this.groups = {};
+
+        var groupIndex = 0;
+        this.addGroup = function ToggleCollectionAddGroup(group) {
+
+            this.groups[groupIndex] = group;
+            groupIndex += 1;
+        };
+    }
+
+    function ToggleBase (elem) {
+
+        this.isOn = false;
+        this.element = null;
+        this.label = null;
+
+        this.setElement = function ToggleBaseSetElement(elem) {
+            this.element = elem.querySelector('.' + config.toggle);
+            this.label = elem.querySelector('.' + config.toggleLabel);
+            this.isOn = (this.element.className.indexOf(config.toggleOn) !== -1);
+        };
+
+        this.on = function ToggleBaseOn() {
+            this.element.classList.remove(config.toggleOff);
+            this.element.classList.add(config.toggleOn);
+            this.isOn = true;
+        };
+
+        this.off = function ToggleBaseOff() {
+            this.element.classList.remove(config.toggleOn);
+            this.element.classList.add(config.toggleOff);
+            this.isOn = false;
+        };
+
+        this.toggle = function ToggleBaseToggle() {
+            if(this.isOn) {
+                this.off();
+            } else {
+                this.on();
+            }
+        };
+
+        this.setEvent = function ToggleBaseSetEvent() {
+            this.element.addEventListener(config.eventType, this.toggle.bind(this), false);
+            if (this.label) {
+                this.label.addEventListener(config.eventType, this.toggle.bind(this), false);
+            }
+        };
+
+        this.removeEvent = function ToggleBaseRemoveEvent() {
+            this.element.removeEventListener(config.eventType, this.toggle.bind(this), false);
+            if (this.label) {
+                this.label.removeEventListener(config.eventType, this.toggle.bind(this), false);
+            }
+        };
+    }
+
+    function ToggleGroup (elem) {
+
+        ToggleBase.call(this, elem);
+        var base = {};
+
+        this.header = null;
+
+        var header = elem.querySelector('.' + config.groupHeader);
+
+        if(header) {
+            this.header = new ToggleMember(header, this);
+            this.setElement(header);
+            this.setEvent();
+        }
+
+        this.members = {};
+
+        base.on = this.on.bind(this);
+        base.off = this.off.bind(this);
+
+        this.on = function ToggleGroupOn() {
+            base.on(this);
+
+            for(var key in this.members) {
+                if(!(this.members[key].isOn)) {
+                    this.members[key].on();
+                }
+            }
+        };
+
+        this.off = function ToggleGroupOff() {
+            base.off(this);
+
+            for(var key in this.members) {
+                if(this.members[key].isOn) {
+                    this.members[key].off();
+                }
+            }
+        };
+
+        this.checkValues = function ToggleGroupCheckValues(newValue) {
+            if(newValue) {
+                if (!this.isOn) {
+                    base.on(this);
+                }
+                return;
+            }
+
+            for(var key in this.members) {
+                if (this.members[key].isOn === true) {
+                    return;
+                }
+            }
+
+            this.off();
+        };
+
+        var memberIndex = 0;
+        this.addMember = function ToggleGroupAddMember(member) {
+            this.members[memberIndex] = member;
+            memberIndex += 1;
+        };
+
+        var mems = elem.querySelectorAll('.' + config.groupMemberContainer + ' .' + config.member);
+
+        for(var memI = 0, memL = mems.length; memI < memL; memI += 1) {
+            var member = new ToggleMember(mems[memI], this);
+            member.setEvent();
+            this.addMember(member);
+        }
+    }
+
+    ToggleGroup.prototype = Object.create(ToggleBase.prototype);
+    ToggleGroup.constructor = ToggleGroup;
+
+    function ToggleMember (elem, group) {
+
+        ToggleBase.call(this, elem);
+        var base = {};
+        this.setElement(elem);
+        this.group = group;
+        this.input = elem.querySelector('.' + config.toggleInput);
+
+        base.on = this.on.bind(this);
+        base.off = this.off.bind(this);
+
+        this.on = function ToggleMemberOn() {
+            base.on(this);
+            if(this.input) {
+                this.input.setAttribute('checked', '');
+            }
+            if(this.group) {
+                this.group.checkValues(true);
+            }
+        };
+
+        this.off = function ToggleMemberOff() {
+            base.off(this);
+            if(this.input) {
+                this.input.removeAttribute('checked');
+            }
+            if(this.group) {
+                this.group.checkValues(false);
+            }
+        };
+    }
+
+    ToggleMember.prototype = Object.create(ToggleBase.prototype);
+    ToggleGroup.constructor = ToggleGroup;
+
+    var elements = null,
+        config = {
+            groupContainer: 'hr-toggle-group',
+            groupHeader: 'hr-toggle-group-header',
+            groupMemberContainer: 'hr-toggle-members',
+            member: 'hr-toggle-member',
+            toggle: 'hr-toggle',
+            toggleLabel: 'hr-toggle-label',
+            toggleInput: 'hr-toggle-input',
+            toggleOn: 'hr-toggle-on',
+            toggleOff: 'hr-toggle-off',
+            eventType: 'click'
+        };
+
+
+    function configure (options) {
+        for(var key in config) {
+            if (options[key]) {
+                config[key] = options[key];
+            }
+        }
+    }
+
+    function prepare () {
+
+        if (APP && APP.config) {
+            config = (APP.config.toggleGroups || config);
+        }
+
+        elements = new ToggleCollection();
+
+        var groups = DOC.getElementsByClassName(config.groupContainer);
+
+        for(var i = 0, j = groups.length; i < j; i += 1) {
+
+            var group = new ToggleGroup(groups[i]);
+            elements.addGroup(group);
+        }
+    }
+
+    var publicAPI = {
+        prepare: prepare,
+        configure: configure
+    };
+
+    if (APP) {
+        console.log('APP');
+        APP.toggleGroups = publicAPI;
+    } else {
+        console.log('GLOBAL');
+        GLOBAL.toggleGroups = publicAPI;
+    }
+
+})(window, document, null);
+
+    var time = new Date();
+    toggleGroups.prepare();
+    var newTime = new Date();
+    alert('Finished: ' + (newTime.getMilliseconds() - time.getMilliseconds()) + ' ms');
+    </script>
 </body>
 </html>

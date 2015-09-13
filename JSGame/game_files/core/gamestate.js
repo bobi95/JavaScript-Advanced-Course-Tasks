@@ -7,7 +7,7 @@
 
         mainMenu: 0,
         options: 1,
-        levelSelect: 2,
+        loadSave: 2,
         playing: 3,
         pauseMenu: 4,
         end: 5

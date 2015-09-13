@@ -2,7 +2,7 @@
 
     var element = DOC.createElement('div');
 
-    var readyElements = {};
+    var docReady = false;
 
     function createEvent (eventName, detail) {
         return new CustomEvent(eventName, { detail: detail });
@@ -10,10 +10,9 @@
 
     function listen (eventName, handler) {
 
-        if (eventName.endsWith(':ready')) {
-            if (eventName in readyElements) {
-                handler(createEvent(eventName, readyElements[eventName]));
-            }
+        if (eventName === 'document:ready' && docReady) {
+            handler(createElement(eventName));
+            return;
         }
 
         element.addEventListener(eventName, handler, false);
@@ -22,8 +21,12 @@
     function trigger (eventName, detail) {
         var e = createEvent(eventName, detail);
 
-        if(eventName.endsWith(':ready')) {
-            readyElements[eventName] = detail;
+        if (eventName === 'document:ready') {
+            if (!docReady) {
+                docReady = true;
+                element.dispatchEvent(e);
+            }
+            return;
         }
 
         element.dispatchEvent(e);
