@@ -9,9 +9,8 @@
                 value:'<header><div class="banner">Banner here</div><ul><li><a href="#/home">Home</a></li><li><a href="#/login">Login</a></li><li><a href="#/register">Register</a></li><li><a href="#/about">About</a></li></ul></header>'
             },
             {
-                type:'function',
-                name:'renderBody',
-                context:['this']
+                type:'echo',
+                path:['this', 'bodyHtml']
             }
             ];
 
@@ -19,6 +18,4 @@
         newTemplate.functions = {};
         return newTemplate;
     })();
-
-    app.registerModule('app.templates.layout');
 })(window, document, app);

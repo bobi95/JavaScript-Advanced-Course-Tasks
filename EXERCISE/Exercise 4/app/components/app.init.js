@@ -1,134 +1,110 @@
-var app = app || {};
-(function (window, document, app) {
+(function(window, document, app) {
 
-    var modules = {},
-        docReadyEvent = 'DOMContentLoaded',
-        isDocReady = document.readyState != 'loading',
-        proxy = document.createElement('div');
+    app.require('app.scripts', initModules);
 
-    Object.isArray = function(obj) {
-        return Object.prototype.toString.call(obj) === '[object Array]';
-    };
+    app.require([
+                'app.router',
+                'app.Controller',
+                'app.controllers.homeController'
+            ], function(){
 
-    app.require = require;
-    function require (names, callback) {
+        initRoutes();
+        app.router.checkHash();
+    });
 
-        function createCallback (names, name) {
-            var arrCallback = function() {
+    function initModules() {
 
-                if (names.length === 1) {
-                    callback();
-                    return;
-                }
+        var components = app.config.scripts.components,
+            controllers = app.config.scripts.controllers,
+            views = app.config.scripts.views,
+            newComponents = [];
 
-                names.splice(names.indexOf(name), 1);
-            };
+        newComponents.push(components.router);
+        newComponents.push(components.templater);
+        newComponents.push(controllers.base);
+        newComponents.push(views.base);
 
-            return arrCallback;
-        }
+        app.scripts.loadMany(newComponents, function() {
+            app.registerModule('app.router');
+            app.registerModule('Templater');
+            app.registerModule('app.Controller');
+            app.registerModule('app.View');
 
-        if(Object.isArray(names)) {
-
-            for(var i = 0, j = names.length; i < j; i += 1) {
-                if(modules[names[i]]) {
-                    names.splice(i, 1);
-                    j -= 1;
-                    i -= 1;
-                }
-            }
-
-            if (names.length === 0) {
-                callback();
-            }
-
-            for(var k = 0, l = names.length; k < l; k += 1) {
-                app.once('module:' + names[k] + ':loaded', createCallback(names, names[k]));
-            }
-
-            return;
-        }
-
-        if (modules[names]) {
-            callback();
-            return;
-        }
-
-        app.once('module:' + names + ':loaded', callback);
+            initTemplates();
+        });
     }
 
-    app.registerModule = registerModule;
-    function registerModule (modName) {
-        if(modules[modName]) {
-            throw new Error(modName + ' is already registered!');
-        }
+    function initTemplates() {
+        var templates = app.config.scripts.templates,
+            newTemplates = [];
 
-        console.log(modName);
-        modules[modName] = true;
-        app.trigger('module:' + modName + ':loaded');
+        newTemplates.push(templates.layout);
+        newTemplates.push(templates.home.index);
+        newTemplates.push(templates.home.about);
+
+        app.scripts.loadMany(newTemplates, function() {
+
+            app.registerModule('app.templates.layout');
+            app.registerModule('app.templates.home.index');
+            app.registerModule('app.templates.home.about');
+
+            initViews();
+        });
     }
 
-    app.once = once;
-    function once (eventName, handler) {
-        console.log('once: ' + eventName);
-        proxy.addEventListener(eventName, function() {
-            proxy.removeEventListener(eventName, arguments.callee, false);
-            handler();
-        }, false);
+    function initViews() {
+
+    var views = app.config.scripts.views,
+        newViews = [];
+
+        newViews.push(views.home.index);
+        newViews.push(views.home.about);
+
+        app.scripts.loadMany(newViews, function(){
+
+            app.registerModule('app.views.home.index');
+            app.registerModule('app.views.home.about');
+
+            initControllers();
+        });
     }
 
-    app.listen = listen;
-    function listen (eventName, handler) {
-        proxy.addEventListener(eventName, handler, false);
+    function initControllers() {
+        var controllers = app.config.scripts.controllers,
+            newControllers = [];
+
+        newControllers.push(controllers.home);
+
+        app.scripts.loadMany(newControllers, function(){
+
+            app.registerModule('app.controllers.homeController');
+
+        });
     }
 
-    app.stopListen = stopListen;
-    function stopListen (eventName, handler) {
-        proxy.removeEventListener(eventName);
+    function initRoutes() {
+
+        app.router
+            .defaultRoute('/')
+            .setControllerNamespace(app.controllers)
+            .registerRoute({
+                name: '/',
+                url: '/',
+                controller: 'home',
+                action: 'index'
+            })
+            .registerRoute({
+                name: 'home',
+                url: '/home/?',
+                controller: 'home',
+                action: 'index'
+            })
+            .registerRoute({
+                name: 'about',
+                url: '/about',
+                controller: 'home',
+                action: 'about'
+            });
     }
-
-    app.trigger = trigger;
-    function trigger (eventName, details) {
-        proxy.dispatchEvent(new CustomEvent(eventName, {detail: details}));
-    }
-
-    app.docReady = docReady;
-    function docReady (handler) {
-        if (isDocReady) {
-            handler();
-            return;
-        }
-
-        document.addEventListener(docReadyEvent, function(){
-            document.removeEventListener(docReadyEvent, arguments.callee, false);
-            isDocReady = true;
-            handler();
-        }, false);
-    }
-
-    // class helpers
-    var Class = {
-        /**
-         * Typescript's method of inheritance
-         * @param  {Class} derived Child class
-         * @param  {Class} base    Parent class
-         * @return {void}
-         */
-        extends: function (derived, base) {
-
-            for(var p in base) {
-                if(base.hasOwnProperty(p)) {
-                    derived[p] = base[p];
-                }
-            }
-
-            function newProto() {
-                this.constructor = derived.prototype;
-            }
-
-            newProto.prototype = base.prototype;
-            derived.prototype = new newProto();
-        }
-    };
-    window.Class = Class;
 
 })(window, document, app);

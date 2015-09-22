@@ -8,8 +8,6 @@
         app.templates.home = app.templates.home || {};
         app.templates.home.index = template;
 
-        app.registerModule('app.templates.home.index');
-
     });
 
 })(window, document, app);

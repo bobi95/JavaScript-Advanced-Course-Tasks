@@ -21,10 +21,6 @@
         })(app.View);
 
         app.views.home.index = indexView;
-
-        app.require('app.templates.home.index', function(){
-            app.registerModule('app.views.home.index');
-        });
     });
 
 

@@ -38,7 +38,7 @@
         var hash = window.location.hash.substr(1);
 
         for(var name in _routes) {
-            if(_routes[name].url === hash) {
+            if(hash.search(_routes[name].url) === 0) {
 
                 var route = _routes[name];
                 if(!app.data) {
@@ -86,7 +86,7 @@
         _routes[name]  = {
             controller: controller,
             action: action,
-            url: url
+            url: '^' + url + '$'
         };
 
         return router;
@@ -102,6 +102,4 @@
     }
 
     app.router = router;
-
-    app.registerModule('app.router');
 })(window, document, app);

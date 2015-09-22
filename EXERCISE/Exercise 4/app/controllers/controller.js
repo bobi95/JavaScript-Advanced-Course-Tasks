@@ -1,6 +1,9 @@
 (function(document, window, app){
 
     app.Controller = Controller;
+
+    var currentView = null;
+
     function Controller(context) {
 
         this.context = {
@@ -15,16 +18,18 @@
         }
     }
 
-    Controller.prototype.view = function (model, view) {
+    Controller.prototype.view = function (model, view, controller) {
         var viewModel = model || {};
         var viewName = view || this.context.action;
-        var viewNamespace = this.context.controller;
+        var viewNamespace = controller || this.context.controller;
 
-        var viewFunc = app.views[viewNamespace][viewName](viewModel);
+        if(currentView) {
+            currentView.unbindEvents();
+        }
+
+        currentView = new app.views[viewNamespace][viewName](viewModel);
+
+        currentView.bindEvents();
     };
-
-    app.require('app.views.home.index', function(){
-        app.registerModule('app.Controller');
-    });
 
 })(document, window, app);

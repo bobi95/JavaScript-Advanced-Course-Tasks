@@ -569,8 +569,6 @@ Template.prototype.run = function (context) {
     return output;
 };
 
-app.registerModule('Templater');
-
 // Best of 5 test: 15008ms (v1.0.0.0 - 16106ms)
 // Cycle from start to end of file 1,000,000 times
 

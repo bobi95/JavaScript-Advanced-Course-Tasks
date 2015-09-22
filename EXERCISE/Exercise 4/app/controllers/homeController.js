@@ -12,6 +12,12 @@
                 this.index = function() {
                     this.view();
                 };
+
+                this.about = function() {
+                    this.view({
+                        serverName: 'Pandemic'
+                    });
+                };
             }
 
             return _homeController;
@@ -20,8 +26,6 @@
 
         app.controllers = app.controllers || {};
         app.controllers.homeController = homeController;
-
-        app.registerModule('app.controllers.homeController');
     });
 
 })(window, document, app);
